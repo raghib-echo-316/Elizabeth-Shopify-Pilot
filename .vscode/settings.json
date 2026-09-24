@@ -1,0 +1,16 @@
+{
+  "files.associations": {
+    "*.liquid": "liquid"
+  },
+  "emmet.includeLanguages": {
+    "liquid": "html"
+  },
+  "[liquid]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+  }
+}

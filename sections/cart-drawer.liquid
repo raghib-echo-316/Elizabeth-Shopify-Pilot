@@ -1,0 +1,144 @@
+<script src="{{ 'cart-drawer.js' | asset_url }}" defer></script>
+
+<cart-drawer>
+  <div class="cart-drawer-wrapper">
+    <div class="cart-drawer-modal">
+      <div class="cart-modal__header">
+        <h3 class="cart-modal__header-title">Your Cart</h3>
+        <div class="cart-modal__header-right">
+          <button id="cart-modal__close-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16" viewBox="0 0 50 50">
+              <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="cart-modal__body">
+        {% if cart.item_count > 0 %}
+          {% for item in cart.items %}
+            <div class="cart-item">
+              <img
+                src="{{ item.image | image_url: width: 120 }}"
+                alt="{{ item.title | escape }}"
+                width="60"
+                height="60"
+              >
+              <div>
+                <a href="{{ item.url }}">{{ item.product.title }}</a>
+                {% unless item.product.has_only_default_variant %}
+                  <p>{{ item.variant.title }}</p>
+                {% endunless %}
+                <p>Qty: {{ item.quantity }}</p>
+                <p>{{ item.final_line_price | money }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>Your cart is empty.</p>
+        {% endif %}
+      </div>
+      <div class="cart-modal__footer">
+        <p>Subtotal: {{ cart.total_price | money }}</p>
+        <a href="{{ routes.cart_url }}">View cart</a>
+        <a href="/checkout">Checkout</a>
+      </div>
+    </div>
+  </div>
+</cart-drawer>
+
+{% stylesheet %}
+  cart-drawer {
+    .cart-drawer-wrapper {
+      background: #00000080;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      transition: 0.3s;
+      visibility: hidden;
+      z-index: 9;
+
+      &.is-active {
+        opacity: 1;
+        visibility: visible;
+
+        .cart-drawer-modal {
+          opacity: 1;
+          transform: translate(0);
+          visibility: visible;
+        }
+      }
+    }
+
+    .cart-drawer-modal {
+      background: #eee;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 2rem);
+      max-width: 320px;
+      opacity: 0;
+      position: fixed;
+      right: 16px;
+      top: 1rem;
+      transform: translate(100%);
+      transition: 0.3s;
+      visibility: hidden;
+      width: 90vw;
+
+      @media (min-width: 768px) {
+        max-width: 440px;
+      }
+    }
+
+    .cart-modal__header {
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      .cart-modal__header-title {
+        align-self: center;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .cart-modal__header-right {
+        #cart-modal__close-btn {
+          align-items: center;
+          cursor: pointer;
+          display: flex;
+          height: 32px;
+          justify-content: center;
+          width: 32px;
+        }
+      }
+    }
+    .cart-modal__body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      .cart-item {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+    }
+    .cart-modal__footer {
+      border-top: 1px solid #ddd;
+      padding: 16px;
+    }
+  }
+{% endstylesheet %}
+
+<script>
+  document.querySelector('#shopping-cart-button').addEventListener('click', () => {
+    document.querySelector('cart-drawer .cart-drawer-wrapper').classList.toggle('is-active');
+  });
+
+  document.querySelector('#cart-modal__close-btn').addEventListener('click', () => {
+    document.querySelector('cart-drawer .cart-drawer-wrapper').classList.remove('is-active');
+  });
+</script>

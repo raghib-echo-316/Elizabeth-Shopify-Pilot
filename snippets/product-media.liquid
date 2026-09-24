@@ -7,7 +7,6 @@
         {{ media | video_tag: controls:true, class:"w-full h-full object-cover" }}
     {% when 'model' %}
         {{ media | model_viewer_tag }}
-        
     {% else %}
         {{ media | media_tag }}
 {% endcase %}
