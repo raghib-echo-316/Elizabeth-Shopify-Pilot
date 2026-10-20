@@ -1,0 +1,23 @@
+https://github.com/polidario/Elizabeth_Clean
+
+shopify theme init --clone-url=https://github.com/polidario/Elizabeth_Clean.git
+
+shopify theme dev --store raghib-yellow-online-store
+
+npm init -y
+npm install tailwindcss @tailwindcss/cli 
+
+create src folder
+create tailwind.css file inside it
+write @import "tailwindcss";
+
+npx @tailwindcss/cli -i ./src/tailwind.css -o ./assets/application.css --watch
+
+shopify theme dev
+
+create .shopifyignore file
+add the following text in there
+package.json
+package-lock.json
+css
+node_modules
