@@ -1,0 +1,114 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--gray trade-benefits">
+    <div class="trade-container trade-container--narrow">
+        {% if section.settings.heading != blank or section.settings.text != blank %}
+            <div class="trade-header">
+                {% if section.settings.heading != blank %}
+                    <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+                {% endif %}
+                {% if section.settings.text != blank %}
+                    <p class="trade-text">{{ section.settings.text }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <ul class="trade-benefits__grid">
+            {% for block in section.blocks %}
+                <li {{ block.shopify_attributes }}>
+                    <div class="trade-benefit">
+                        <span class="trade-benefit__icon">{% render 'trade-icon', icon: block.settings.icon %}</span>
+                        <h3 class="trade-h3">{{ block.settings.title }}</h3>
+                        {% if block.settings.text != blank %}
+                            <p class="trade-text">{{ block.settings.text }}</p>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if section.settings.button_label != blank %}
+            <div class="trade-benefits__cta">
+                <a href="{{ section.settings.button_link }}" class="trade-btn trade-btn--dark">{{ section.settings.button_label }}</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Benefits",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "More Than Just Pricing",
+            "label": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "default": "Apply for Trade Pricing",
+            "label": "Button label"
+        },
+        {
+            "type": "text",
+            "id": "button_link",
+            "default": "#apply",
+            "label": "Button link",
+            "info": "A URL or an anchor such as #apply"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "benefit",
+            "name": "Benefit",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "icon",
+                    "label": "Icon",
+                    "default": "check",
+                    "options": [
+                        { "value": "box", "label": "Box" },
+                        { "value": "truck", "label": "Truck" },
+                        { "value": "clock", "label": "Clock" },
+                        { "value": "tag", "label": "Tag" },
+                        { "value": "user", "label": "Person" },
+                        { "value": "star", "label": "Star" },
+                        { "value": "percent", "label": "Percent" },
+                        { "value": "check", "label": "Check" }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "default": "Benefit",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Benefits",
+            "blocks": [
+                { "type": "benefit" },
+                { "type": "benefit" },
+                { "type": "benefit" },
+                { "type": "benefit" }
+            ]
+        }
+    ]
+}
+{% endschema %}

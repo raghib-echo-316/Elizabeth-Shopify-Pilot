@@ -2,9 +2,17 @@
     "sections":{
         "featured-collection" : {
             "type":"featured-collection"
+        },
+        "featured-collection-new" : {
+            "type":"featured-collection-new"
+        },
+        "hero-banner" : {
+            "type":"hero-banner"
         }
     },
     "order":[
+        "hero-banner",
+        "featured-collection-new",
         "featured-collection"
     ]
 }

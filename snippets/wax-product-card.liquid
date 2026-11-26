@@ -1,0 +1,89 @@
+<div class="wax-product-card">
+  {% comment %} image {% endcomment %}
+  <a class="wax-product-image-container" href="{{ product_product.url }}">
+    {% if product_product.featured_image %}
+      <div class="wax-product-image-wrapper">
+        <img
+          class="wax-product-image"
+          src="{{ product_product.featured_image | image_url: width: 500 }}"
+          alt="{{ product_product.featured_image.alt }}"
+          width="500"
+          height="500"
+        >
+
+        {% for option in product_product.options_with_values %}
+          {% if option.name == 'Size' %}
+            <div class="product-sizes">
+              {% for value in option.values %}
+                {% if value.available %}
+                  <p class="product-size size-available">{{ value }}</p>
+                {% endif %}
+              {% else %}
+                <p class="product-size size-not-available">{{ value }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {%- endfor %}
+      </div>
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'wax-product-placeholder-svg' }}
+    {% endif %}
+  </a>
+  {% comment %} Title and Price {% endcomment %}
+  <div>
+    <a href="{{ product_product.url }}">
+      <p>{{ product_product.title }}</p>
+    </a>
+    <p>{{ product_product.price | money }}</p>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* was: h-40 overflow-hidden */
+  .wax-product-card .wax-product-image-wrapper {
+    height: 10rem;
+    overflow: hidden;
+  }
+
+  /* was: w-full h-full object-cover transition duration-1000 ease-in-out transform hover:scale-105 */
+  .wax-product-card .wax-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .wax-product-card .wax-product-image:hover {
+    /* transform: scale(1.05); */
+  }
+
+  /* was: w-full h-full object-cover bg-gray-100 */
+  .wax-product-card .wax-product-placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #f3f4f6;
+  }
+  .wax-product-card .wax-product-image-container{
+    position: relative;
+  }
+
+  .wax-product-card .product-sizes {
+    display: none;
+    gap: 12px;
+    position: absolute;
+    bottom: -50px;
+    opacity: 0;
+    background-color: #fff;
+    width: 100%;
+  }
+
+  .wax-product-card .wax-product-image-container:hover .product-sizes{
+    bottom: 0px;
+    opacity: 1;
+    display: flex;
+  }
+
+  .wax-product-card .product-size.size-not-available {
+    text-decoration: line-through;
+  }
+{% endstylesheet %}

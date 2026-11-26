@@ -1,0 +1,68 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--white trade-steps">
+    <div class="trade-container trade-container--narrow">
+        {% if section.settings.heading != blank %}
+            <div class="trade-header">
+                <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+            </div>
+        {% endif %}
+
+        <ol class="trade-steps__grid">
+            {% for block in section.blocks %}
+                <li class="trade-step" {{ block.shopify_attributes }}>
+                    <span class="trade-step__number" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+                    <h3 class="trade-h3">{{ block.settings.title }}</h3>
+                    {% if block.settings.text != blank %}
+                        <p class="trade-text">{{ block.settings.text }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Steps",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Get Started in Four Simple Steps",
+            "label": "Heading"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "step",
+            "name": "Step",
+            "limit": 8,
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "default": "Step",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Steps",
+            "blocks": [
+                { "type": "step" },
+                { "type": "step" },
+                { "type": "step" },
+                { "type": "step" }
+            ]
+        }
+    ]
+}
+{% endschema %}

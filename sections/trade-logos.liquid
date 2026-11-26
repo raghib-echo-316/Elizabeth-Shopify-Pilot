@@ -1,0 +1,71 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--gray trade-logos" style="--trade-marquee-speed: 40s;">
+    {% if section.settings.caption != blank %}
+        <p class="trade-logos__caption">{{ section.settings.caption }}</p>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+        <div class="trade-logos__viewport">
+            {% comment %} The list is rendered twice so the marquee loops without a gap. {% endcomment %}
+            {% for pass in (1..2) %}
+                <ul class="trade-logos__track" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+                    {% for block in section.blocks %}
+                        <li class="trade-logos__item" {% if pass == 1 %}{{ block.shopify_attributes }}{% endif %}>
+                            {% if block.settings.logo != blank %}
+                                {{ block.settings.logo | image_url: height: 80 | image_tag: loading: 'lazy', alt: block.settings.name }}
+                            {% else %}
+                                <span class="trade-logos__name">{{ block.settings.name }}</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Logo marquee",
+    "settings": [
+        {
+            "type": "text",
+            "id": "caption",
+            "default": "Chosen by 2000+ design professionals, from hospitality groups to independent studios.",
+            "label": "Caption"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "logo",
+            "name": "Logo",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "logo",
+                    "label": "Logo image"
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "default": "Partner",
+                    "label": "Name",
+                    "info": "Shown when no image is set, and used as alt text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Logo marquee",
+            "blocks": [
+                { "type": "logo", "settings": { "name": "Studio North" } },
+                { "type": "logo", "settings": { "name": "Atelier Nine" } },
+                { "type": "logo", "settings": { "name": "Harbor Hotels" } },
+                { "type": "logo", "settings": { "name": "Linden & Co" } }
+            ]
+        }
+    ]
+}
+{% endschema %}

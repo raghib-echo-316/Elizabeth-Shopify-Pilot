@@ -1,0 +1,87 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--gray trade-testimonials">
+    <div class="trade-container">
+        {% if section.settings.heading != blank or section.settings.text != blank %}
+            <div class="trade-header">
+                {% if section.settings.heading != blank %}
+                    <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+                {% endif %}
+                {% if section.settings.text != blank %}
+                    <p class="trade-text">{{ section.settings.text }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <ul class="trade-testimonials__grid">
+            {% for block in section.blocks %}
+                <li {{ block.shopify_attributes }}>
+                    <figure class="trade-quote">
+                        <span class="trade-quote__mark" aria-hidden="true">&ldquo;</span>
+                        <blockquote>{{ block.settings.quote }}</blockquote>
+                        <figcaption>
+                            <span class="trade-quote__name">{{ block.settings.name }}</span>
+                            {% if block.settings.company != blank %}
+                                <span class="trade-quote__company">{{ block.settings.company }}</span>
+                            {% endif %}
+                        </figcaption>
+                    </figure>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Testimonials",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "What Our Partners Say",
+            "label": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                {
+                    "type": "textarea",
+                    "id": "quote",
+                    "default": "Add a quote from a trade partner.",
+                    "label": "Quote"
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "default": "Name",
+                    "label": "Name"
+                },
+                {
+                    "type": "text",
+                    "id": "company",
+                    "label": "Company"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Testimonials",
+            "blocks": [
+                { "type": "testimonial" },
+                { "type": "testimonial" },
+                { "type": "testimonial" }
+            ]
+        }
+    ]
+}
+{% endschema %}

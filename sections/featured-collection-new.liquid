@@ -1,0 +1,51 @@
+<div class="featured-collection--new">
+  <div class="featured-items">
+    {% for product in section.settings.featured_collection_new.products
+      limit: section.settings.number_of_products_to_show__custom
+    %}
+      {% render 'wax-product-card', product_product: product %}
+    {% else %}
+      {% for item in (1..4) %}
+        {% render 'wax-product-placeholder' %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .featured-collection--new {
+    padding: 10px;
+  }
+
+  .featured-items {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured Collection New",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "featured_collection_new",
+      "label": "Collection New"
+    },
+    {
+      "type": "range",
+      "id": "number_of_products_to_show__custom",
+      "min": 4,
+      "max": 12,
+      "default": 4,
+      "label": "Number of products to show custom"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection New"
+    }
+  ]
+}
+{% endschema %}

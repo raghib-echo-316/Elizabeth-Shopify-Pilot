@@ -1,0 +1,191 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+{% assign business_options = section.settings.business_options | split: ',' %}
+{% assign source_options = section.settings.source_options | split: ',' %}
+
+<section id="apply" class="trade trade--white trade-application">
+    <div class="trade-container trade-container--narrow">
+        <div class="trade-columns">
+            <div class="trade-columns__intro">
+                {% if section.settings.heading != blank %}
+                    <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+                {% endif %}
+                {% if section.settings.text != blank %}
+                    <p class="trade-text">{{ section.settings.text }}</p>
+                {% endif %}
+            </div>
+
+            <div class="trade-form">
+                {% form 'contact', id: 'TradeApplicationForm' %}
+                    {% if form.errors %}
+                        <div class="trade-form__alert trade-form__alert--error" role="alert">
+                            Please check the form and try again.
+                            <ul>
+                                {% for error in form.errors %}
+                                    <li>{{ form.errors.translated_fields[error] | capitalize }} {{ form.errors.messages[error] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% elsif form.posted_successfully? %}
+                        <div class="trade-form__alert trade-form__alert--success" role="status">
+                            {{ section.settings.success_message }}
+                        </div>
+                    {% endif %}
+
+                    {% if section.settings.form_lead != blank %}
+                        <p class="trade-form__lead">{{ section.settings.form_lead }}</p>
+                    {% endif %}
+
+                    <input type="hidden" name="contact[tags]" value="trade-application">
+
+                    <div class="trade-form__grid">
+                        <div class="trade-field trade-field--full">
+                            <label for="Trade-company">Company name</label>
+                            <input type="text" id="Trade-company" name="contact[Company name]" autocomplete="organization" required>
+                        </div>
+                        <div class="trade-field">
+                            <label for="Trade-first-name">First name</label>
+                            <input type="text" id="Trade-first-name" name="contact[First name]" autocomplete="given-name" required>
+                        </div>
+                        <div class="trade-field">
+                            <label for="Trade-last-name">Last name</label>
+                            <input type="text" id="Trade-last-name" name="contact[Last name]" autocomplete="family-name" required>
+                        </div>
+                        <div class="trade-field">
+                            <label for="Trade-email">Email</label>
+                            <input type="email" id="Trade-email" name="contact[email]" autocomplete="email" value="{{ form.email }}" required>
+                        </div>
+                        <div class="trade-field">
+                            <label for="Trade-phone">Phone</label>
+                            <input type="tel" id="Trade-phone" name="contact[Phone]" autocomplete="tel">
+                        </div>
+                        <div class="trade-field trade-field--full">
+                            <label for="Trade-address">Address</label>
+                            <input type="text" id="Trade-address" name="contact[Address]" autocomplete="address-line1">
+                        </div>
+                        <div class="trade-field trade-field--full">
+                            <label for="Trade-address2">Apartment, suite, etc.</label>
+                            <input type="text" id="Trade-address2" name="contact[Address line 2]" autocomplete="address-line2">
+                        </div>
+                        <div class="trade-field">
+                            <label for="Trade-city">City</label>
+                            <input type="text" id="Trade-city" name="contact[City]" autocomplete="address-level2">
+                        </div>
+                        <div class="trade-field">
+                            <label for="Trade-postal">Postal code</label>
+                            <input type="text" id="Trade-postal" name="contact[Postal code]" autocomplete="postal-code">
+                        </div>
+                        <div class="trade-field trade-field--full">
+                            <label for="Trade-country">Country / region</label>
+                            <input type="text" id="Trade-country" name="contact[Country]" autocomplete="country-name">
+                        </div>
+                        {% if business_options.size > 0 %}
+                            <div class="trade-field trade-field--full">
+                                <label for="Trade-business">Line of business</label>
+                                <select id="Trade-business" name="contact[Line of business]" required>
+                                    <option value="" disabled selected>Select an option</option>
+                                    {% for option in business_options %}
+                                        <option value="{{ option | strip | escape }}">{{ option | strip }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div class="trade-field trade-field--full">
+                            <label for="Trade-tax-id">{{ section.settings.tax_id_label }}</label>
+                            <input type="text" id="Trade-tax-id" name="contact[{{ section.settings.tax_id_label | escape }}]" inputmode="numeric">
+                        </div>
+                        {% if source_options.size > 0 %}
+                            <div class="trade-field trade-field--full">
+                                <label for="Trade-source">How did you hear about us?</label>
+                                <select id="Trade-source" name="contact[How did you hear about us]">
+                                    <option value="" selected>Select an option</option>
+                                    {% for option in source_options %}
+                                        <option value="{{ option | strip | escape }}">{{ option | strip }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                        <div class="trade-field trade-field--full">
+                            <label for="Trade-message">Tell us about your projects (optional)</label>
+                            <textarea id="Trade-message" name="contact[body]" rows="3">{{ form.body }}</textarea>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="trade-form__submit">{{ section.settings.submit_label }}</button>
+
+                    {% if section.settings.note != blank %}
+                        <div class="trade-form__note">{{ section.settings.note }}</div>
+                    {% endif %}
+                {% endform %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Application form",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Submit your application",
+            "label": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+        },
+        {
+            "type": "text",
+            "id": "form_lead",
+            "default": "Complete the form to sign up",
+            "label": "Text above the form"
+        },
+        {
+            "type": "text",
+            "id": "business_options",
+            "default": "Interior Designer, Architect, Developer, Retailer / Showroom, Hospitality / Commercial, Other",
+            "label": "Line of business options",
+            "info": "Separate options with commas"
+        },
+        {
+            "type": "text",
+            "id": "tax_id_label",
+            "default": "EIN / Tax ID (numbers only)",
+            "label": "Tax ID field label"
+        },
+        {
+            "type": "text",
+            "id": "source_options",
+            "default": "Search engine, Social media, Referral, Trade show, Press, Other",
+            "label": "\"How did you hear about us\" options",
+            "info": "Separate options with commas"
+        },
+        {
+            "type": "text",
+            "id": "submit_label",
+            "default": "Submit",
+            "label": "Submit button label"
+        },
+        {
+            "type": "text",
+            "id": "success_message",
+            "default": "Thanks for applying! Our trade team will be in touch within 3 business days.",
+            "label": "Success message"
+        },
+        {
+            "type": "richtext",
+            "id": "note",
+            "default": "<p>By signing up, you agree to receive marketing messages at the email provided. View our privacy policy and terms of service for more info.</p>",
+            "label": "Note below the button"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Application form"
+        }
+    ]
+}
+{% endschema %}

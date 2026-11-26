@@ -1,0 +1,358 @@
+{
+    "sections": {
+        "hero": {
+            "type": "trade-hero",
+            "blocks": {
+                "feature_minimum": { "type": "feature", "settings": { "icon": "box", "text": "No minimum order" } },
+                "feature_shipping": { "type": "feature", "settings": { "icon": "truck", "text": "Free shipping" } },
+                "feature_approval": { "type": "feature", "settings": { "icon": "clock", "text": "Approved within 3 business days" } }
+            },
+            "block_order": ["feature_minimum", "feature_shipping", "feature_approval"],
+            "settings": {
+                "heading": "The Trade Program",
+                "text": "<p>Furniture, lighting and hardware at exclusive pricing, with a dedicated contact from quote to delivery. Built for interior designers, architects and design professionals.</p>",
+                "button_label": "Apply for Trade Pricing",
+                "button_link": "#apply"
+            }
+        },
+        "logos": {
+            "type": "trade-logos",
+            "blocks": {
+                "logo_1": { "type": "logo", "settings": { "name": "Studio North" } },
+                "logo_2": { "type": "logo", "settings": { "name": "Atelier Nine" } },
+                "logo_3": { "type": "logo", "settings": { "name": "Harbor Hotels" } },
+                "logo_4": { "type": "logo", "settings": { "name": "Linden & Co" } },
+                "logo_5": { "type": "logo", "settings": { "name": "Meridian Group" } },
+                "logo_6": { "type": "logo", "settings": { "name": "Oakline Interiors" } },
+                "logo_7": { "type": "logo", "settings": { "name": "The Grand Arcade" } }
+            },
+            "block_order": ["logo_1", "logo_2", "logo_3", "logo_4", "logo_5", "logo_6", "logo_7"],
+            "settings": {
+                "caption": "Chosen by 2000+ design professionals, from hospitality groups to independent studios."
+            }
+        },
+        "audience": {
+            "type": "trade-audience",
+            "blocks": {
+                "designers": {
+                    "type": "card",
+                    "settings": {
+                        "title": "Interior Designers",
+                        "text": "Comprehensive trade discounts with zero minimums on bespoke furniture.",
+                        "link_label": "Apply",
+                        "link": "#apply"
+                    }
+                },
+                "architects": {
+                    "type": "card",
+                    "settings": {
+                        "title": "Architects & Developers",
+                        "text": "Sourcing files, certified hardware and volume support for contract specs.",
+                        "link_label": "Apply",
+                        "link": "#apply"
+                    }
+                },
+                "retailers": {
+                    "type": "card",
+                    "settings": {
+                        "title": "Retailers & Showrooms",
+                        "text": "Curation catalogs and priority manufacturing slots for showroom floor partners.",
+                        "link_label": "Apply",
+                        "link": "#apply"
+                    }
+                },
+                "hospitality": {
+                    "type": "card",
+                    "settings": {
+                        "title": "Hospitality & Commercial",
+                        "text": "Highly durable materials engineered for scale, hotel fitouts and restaurants.",
+                        "link_label": "Apply",
+                        "link": "#apply"
+                    }
+                }
+            },
+            "block_order": ["designers", "architects", "retailers", "hospitality"],
+            "settings": {
+                "heading": "Who it's for"
+            }
+        },
+        "specifying": {
+            "type": "trade-specifying",
+            "blocks": {
+                "assortment": {
+                    "type": "item",
+                    "settings": {
+                        "title": "A wide lighting assortment",
+                        "text": "Source statement pieces, architectural lighting, decorative fixtures, and complementary products within one destination."
+                    }
+                },
+                "project_types": {
+                    "type": "item",
+                    "settings": {
+                        "title": "Solutions across project types",
+                        "text": "Lighting for residential, hospitality, commercial, and development projects."
+                    }
+                },
+                "support": {
+                    "type": "item",
+                    "settings": {
+                        "title": "Trade support when you need it",
+                        "text": "Get help with product questions, larger orders, availability, and purchasing."
+                    }
+                },
+                "purchasing": {
+                    "type": "item",
+                    "settings": {
+                        "title": "Project-friendly purchasing",
+                        "text": "Trade pricing, free shipping, and eligible tax exemptions help simplify project budgets."
+                    }
+                },
+                "access": {
+                    "type": "item",
+                    "settings": {
+                        "title": "One account. Ongoing access.",
+                        "text": "Once approved, professionals can return to us for future projects without reapplying."
+                    }
+                }
+            },
+            "block_order": ["assortment", "project_types", "support", "purchasing", "access"],
+            "settings": {
+                "heading": "Make specifying easier"
+            }
+        },
+        "slideshow": {
+            "type": "trade-slideshow",
+            "blocks": {
+                "slide_1": { "type": "slide", "settings": { "caption": "Considered pieces, built for projects that need to last." } },
+                "slide_2": { "type": "slide", "settings": { "caption": "Lighting and furniture specified for hospitality at scale." } },
+                "slide_3": { "type": "slide", "settings": { "caption": "Finishes and materials chosen to age beautifully." } }
+            },
+            "block_order": ["slide_1", "slide_2", "slide_3"],
+            "settings": {
+                "label": "Project gallery"
+            }
+        },
+        "benefits": {
+            "type": "trade-benefits",
+            "blocks": {
+                "pricing": {
+                    "type": "benefit",
+                    "settings": {
+                        "icon": "tag",
+                        "title": "Exclusive trade pricing",
+                        "text": "Up to 20% discount based on tier structure, applied directly at checkout online or via quote."
+                    }
+                },
+                "contact": {
+                    "type": "benefit",
+                    "settings": {
+                        "icon": "user",
+                        "title": "A named contact",
+                        "text": "Personalized service with direct phone and email access to resolve custom specifications."
+                    }
+                },
+                "shipping": {
+                    "type": "benefit",
+                    "settings": {
+                        "icon": "truck",
+                        "title": "Free shipping",
+                        "text": "No delivery charges on standard orders. Coordinated shipping of bulk orders."
+                    }
+                },
+                "priority": {
+                    "type": "benefit",
+                    "settings": {
+                        "icon": "clock",
+                        "title": "Priority processing",
+                        "text": "Your orders enter production and shipping queue with elevated priority to meet install targets."
+                    }
+                },
+                "early_access": {
+                    "type": "benefit",
+                    "settings": {
+                        "icon": "star",
+                        "title": "Early access",
+                        "text": "Preview and order from new seasonal collections before they launch to the general public."
+                    }
+                },
+                "tax": {
+                    "type": "benefit",
+                    "settings": {
+                        "icon": "percent",
+                        "title": "Zero sales tax",
+                        "text": "Seamless VAT/sales tax exemption integration for eligible companies and physical stores."
+                    }
+                }
+            },
+            "block_order": ["pricing", "contact", "shipping", "priority", "early_access", "tax"],
+            "settings": {
+                "heading": "More Than Just Pricing",
+                "text": "We understand your timelines and client pressures. Our benefits ensure you have a seamless experience from planning to installation.",
+                "button_label": "Apply for Trade Pricing",
+                "button_link": "#apply"
+            }
+        },
+        "steps": {
+            "type": "trade-steps",
+            "blocks": {
+                "apply": {
+                    "type": "step",
+                    "settings": { "title": "Apply", "text": "Tell us about your business. Takes under two minutes, no documents required." }
+                },
+                "reviewed": {
+                    "type": "step",
+                    "settings": { "title": "Reviewed", "text": "A member of our trade team reviews your application personally." }
+                },
+                "approved": {
+                    "type": "step",
+                    "settings": { "title": "Approved", "text": "You'll hear back within 3 business days, with your account and pricing ready to go." }
+                },
+                "order": {
+                    "type": "step",
+                    "settings": { "title": "Order", "text": "Order through your account, or work directly with your named contact." }
+                }
+            },
+            "block_order": ["apply", "reviewed", "approved", "order"],
+            "settings": {
+                "heading": "Get Started in Four Simple Steps"
+            }
+        },
+        "testimonials": {
+            "type": "trade-testimonials",
+            "blocks": {
+                "quote_1": {
+                    "type": "testimonial",
+                    "settings": {
+                        "quote": "Their trade pricing and turnaround have made them our first call for every project.",
+                        "name": "Alistair Vance",
+                        "company": "Vance & Partners"
+                    }
+                },
+                "quote_2": {
+                    "type": "testimonial",
+                    "settings": {
+                        "quote": "The team treats every order like it's the only one they're working on. That's rare.",
+                        "name": "Elena Rostova",
+                        "company": "Studio Rostova"
+                    }
+                },
+                "quote_3": {
+                    "type": "testimonial",
+                    "settings": {
+                        "quote": "Well-made pieces, and someone who actually picks up the phone.",
+                        "name": "Jonathan Miller",
+                        "company": "Miller & Co."
+                    }
+                }
+            },
+            "block_order": ["quote_1", "quote_2", "quote_3"],
+            "settings": {
+                "heading": "What Our Partners Say",
+                "text": "Over 1,700 design studios, developers, and commercial entities trust us for their projects."
+            }
+        },
+        "application": {
+            "type": "trade-application",
+            "settings": {
+                "heading": "Submit your application",
+                "text": "Register to join over 2,000 design professionals already on the program. Approved accounts gain wholesale platform access in under three business days.",
+                "form_lead": "Complete the form to sign up"
+            }
+        },
+        "faq": {
+            "type": "trade-faq",
+            "blocks": {
+                "documents": {
+                    "type": "question",
+                    "settings": {
+                        "question": "Do I need to provide business documents to apply?",
+                        "answer": "<p>Yes. You'll need your EIN (Employer Identification Number) and your line of business. If your purchases are tax exempt, you can also share your tax exemption certificate. It's optional.</p>"
+                    }
+                },
+                "minimum": {
+                    "type": "question",
+                    "settings": {
+                        "question": "Is there a minimum order value?",
+                        "answer": "<p>No. Order as much or as little as your project needs.</p>"
+                    }
+                },
+                "discounts": {
+                    "type": "question",
+                    "settings": {
+                        "question": "What discounts do Trade Program members receive?",
+                        "answer": "<p>Members get 20% off. During site-wide sales, that rises to 25%.</p>"
+                    }
+                },
+                "approval_time": {
+                    "type": "question",
+                    "settings": {
+                        "question": "How long does approval take?",
+                        "answer": "<p>Less than 24 hours on business days.</p>"
+                    }
+                },
+                "samples": {
+                    "type": "question",
+                    "settings": {
+                        "question": "Can I get samples or spec sheets?",
+                        "answer": "<p>Yes. Get in touch with the products you're considering and we'll send them over.</p>"
+                    }
+                },
+                "returns": {
+                    "type": "question",
+                    "settings": {
+                        "question": "What's your returns policy for trade orders?",
+                        "answer": "<p>Trade orders follow the same returns policy as every other order. You'll find the full details on our returns page.</p>"
+                    }
+                },
+                "international": {
+                    "type": "question",
+                    "settings": {
+                        "question": "Do you ship outside the US?",
+                        "answer": "<p>Yes. Shipping costs and delivery times depend on your destination and are shown at checkout.</p>"
+                    }
+                },
+                "design_support": {
+                    "type": "question",
+                    "settings": {
+                        "question": "Does the Trade Program include design support?",
+                        "answer": "<p>Yes. Our design team can help with product selection and specification for your project. Reach out once your account is approved.</p>"
+                    }
+                },
+                "personal": {
+                    "type": "question",
+                    "settings": {
+                        "question": "Can I use trade pricing for personal projects?",
+                        "answer": "<p>Yes. Trade pricing applies to any order placed from an approved account.</p>"
+                    }
+                }
+            },
+            "block_order": ["documents", "minimum", "discounts", "approval_time", "samples", "returns", "international", "design_support", "personal"],
+            "settings": {
+                "heading": "Frequently Asked Questions",
+                "text": "Can't find what you're looking for? Reach out to our trade team and we'll be happy to help."
+            }
+        },
+        "cta": {
+            "type": "trade-cta",
+            "settings": {
+                "heading": "Ready to start?",
+                "text": "Apply for trade pricing today — no minimum order, no long forms.",
+                "button_label": "Apply for Trade Pricing",
+                "button_link": "#apply"
+            }
+        }
+    },
+    "order": [
+        "hero",
+        "logos",
+        "audience",
+        "specifying",
+        "slideshow",
+        "benefits",
+        "steps",
+        "testimonials",
+        "application",
+        "faq",
+        "cta"
+    ]
+}

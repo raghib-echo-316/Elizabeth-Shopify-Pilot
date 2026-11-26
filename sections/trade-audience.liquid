@@ -1,0 +1,102 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--gray trade-audience">
+    <div class="trade-container">
+        {% if section.settings.heading != blank %}
+            <div class="trade-header">
+                <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+            </div>
+        {% endif %}
+
+        <ul class="trade-audience__grid">
+            {% for block in section.blocks %}
+                <li {{ block.shopify_attributes }}>
+                    <article class="trade-card">
+                        <div class="trade-card__media trade-media">
+                            {% if block.settings.image != blank %}
+                                {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, (min-width: 560px) 50vw, 100vw', widths: '400,600,800' }}
+                            {% else %}
+                                {% capture placeholder %}collection-{{ forloop.index | modulo: 6 | plus: 1 }}{% endcapture %}
+                                {{ placeholder | placeholder_svg_tag: 'trade-placeholder' }}
+                            {% endif %}
+                        </div>
+                        <div class="trade-card__body">
+                            <h3 class="trade-h3">{{ block.settings.title }}</h3>
+                            {% if block.settings.text != blank %}
+                                <p class="trade-text">{{ block.settings.text }}</p>
+                            {% endif %}
+                            {% if block.settings.link_label != blank %}
+                                <a href="{{ block.settings.link }}" class="trade-link">
+                                    {{ block.settings.link_label }}
+                                    {% render 'trade-icon', icon: 'arrow' %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </article>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Audience cards",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Who it's for",
+            "label": "Heading"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "card",
+            "name": "Card",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "default": "Audience",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "text",
+                    "id": "link_label",
+                    "default": "Apply",
+                    "label": "Link label"
+                },
+                {
+                    "type": "text",
+                    "id": "link",
+                    "default": "#apply",
+                    "label": "Link",
+                    "info": "A URL or an anchor such as #apply"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Audience cards",
+            "blocks": [
+                { "type": "card" },
+                { "type": "card" },
+                { "type": "card" },
+                { "type": "card" }
+            ]
+        }
+    ]
+}
+{% endschema %}

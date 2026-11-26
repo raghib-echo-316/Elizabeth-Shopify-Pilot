@@ -1,0 +1,78 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--white trade-faq">
+    <div class="trade-container trade-container--narrow">
+        <div class="trade-columns">
+            <div class="trade-columns__intro">
+                {% if section.settings.heading != blank %}
+                    <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+                {% endif %}
+                {% if section.settings.text != blank %}
+                    <p class="trade-text">{{ section.settings.text }}</p>
+                {% endif %}
+            </div>
+
+            <div class="trade-faq__list">
+                {% for block in section.blocks %}
+                    {% comment %} Sharing a name makes the accordion open one item at a time in supporting browsers. {% endcomment %}
+                    <details class="trade-faq__item" name="trade-faq-{{ section.id }}" {{ block.shopify_attributes }}>
+                        <summary class="trade-faq__question">
+                            <span>{{ block.settings.question }}</span>
+                            {% render 'trade-icon', icon: 'plus' %}
+                        </summary>
+                        <div class="trade-faq__answer">{{ block.settings.answer }}</div>
+                    </details>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: FAQ",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Frequently Asked Questions",
+            "label": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "question",
+            "name": "Question",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "question",
+                    "default": "Question",
+                    "label": "Question"
+                },
+                {
+                    "type": "richtext",
+                    "id": "answer",
+                    "default": "<p>Answer</p>",
+                    "label": "Answer"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: FAQ",
+            "blocks": [
+                { "type": "question" },
+                { "type": "question" },
+                { "type": "question" }
+            ]
+        }
+    ]
+}
+{% endschema %}

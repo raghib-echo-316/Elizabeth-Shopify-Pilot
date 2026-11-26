@@ -1,0 +1,116 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade-hero">
+    <div class="trade-hero__media trade-media">
+        {% if section.settings.image != blank %}
+            {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '100vw', widths: '750,1100,1500,2000,2400' }}
+        {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'trade-placeholder' }}
+        {% endif %}
+    </div>
+    <div class="trade-hero__overlay" style="opacity: 0.35;"></div>
+
+    <div class="trade-container trade-hero__inner">
+        <div class="trade-hero__content">
+            {% if section.settings.heading != blank %}
+                <h1 class="trade-h1">{{ section.settings.heading }}</h1>
+            {% endif %}
+            {% if section.settings.text != blank %}
+                <div class="trade-text">{{ section.settings.text }}</div>
+            {% endif %}
+            {% if section.settings.button_label != blank %}
+                <a href="{{ section.settings.button_link }}" class="trade-btn trade-btn--light">{{ section.settings.button_label }}</a>
+            {% endif %}
+        </div>
+
+        {% if section.blocks.size > 0 %}
+            <ul class="trade-hero__features">
+                {% for block in section.blocks %}
+                    <li {{ block.shopify_attributes }}>
+                        {% render 'trade-icon', icon: block.settings.icon %}
+                        <span>{{ block.settings.text }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Hero",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "The Trade Program",
+            "label": "Heading"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "default": "<p>Furniture, lighting and hardware at exclusive pricing, with a dedicated contact from quote to delivery. Built for interior designers, architects and design professionals.</p>",
+            "label": "Text"
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "default": "Apply for Trade Pricing",
+            "label": "Button label"
+        },
+        {
+            "type": "text",
+            "id": "button_link",
+            "default": "#apply",
+            "label": "Button link",
+            "info": "A URL or an anchor such as #apply"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "feature",
+            "name": "Feature",
+            "limit": 4,
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "icon",
+                    "label": "Icon",
+                    "default": "check",
+                    "options": [
+                        { "value": "box", "label": "Box" },
+                        { "value": "truck", "label": "Truck" },
+                        { "value": "clock", "label": "Clock" },
+                        { "value": "tag", "label": "Tag" },
+                        { "value": "user", "label": "Person" },
+                        { "value": "star", "label": "Star" },
+                        { "value": "percent", "label": "Percent" },
+                        { "value": "check", "label": "Check" }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "text",
+                    "default": "Feature",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Hero",
+            "blocks": [
+                { "type": "feature", "settings": { "icon": "box", "text": "No minimum order" } },
+                { "type": "feature", "settings": { "icon": "truck", "text": "Free shipping" } },
+                { "type": "feature", "settings": { "icon": "clock", "text": "Approved within 3 business days" } }
+            ]
+        }
+    ]
+}
+{% endschema %}

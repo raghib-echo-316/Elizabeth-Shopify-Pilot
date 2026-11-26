@@ -1,0 +1,82 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--white trade-specifying">
+    <div class="trade-container">
+        <div class="trade-split">
+            <div class="trade-split__content">
+                {% if section.settings.heading != blank %}
+                    <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+                {% endif %}
+
+                {% if section.blocks.size > 0 %}
+                    <ul class="trade-checklist">
+                        {% for block in section.blocks %}
+                            <li {{ block.shopify_attributes }}>
+                                <h3 class="trade-h3">{{ block.settings.title }}</h3>
+                                {% if block.settings.text != blank %}
+                                    <p class="trade-text">{{ block.settings.text }}</p>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="trade-split__media trade-media">
+                {% if section.settings.image != blank %}
+                    {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 50vw, 100vw', widths: '600,900,1200,1400' }}
+                {% else %}
+                    {{ 'lifestyle-2' | placeholder_svg_tag: 'trade-placeholder' }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Image with list",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Make specifying easier",
+            "label": "Heading"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "item",
+            "name": "List item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "default": "List item",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "text",
+                    "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Image with list",
+            "blocks": [
+                { "type": "item" },
+                { "type": "item" },
+                { "type": "item" }
+            ]
+        }
+    ]
+}
+{% endschema %}

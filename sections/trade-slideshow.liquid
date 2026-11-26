@@ -1,0 +1,109 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade--white trade-slideshow">
+    <div class="trade-container trade-container--narrow">
+        <div
+            class="trade-slideshow__frame"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="{{ section.settings.label | escape }}"
+            x-data="{
+                active: 0,
+                total: {{ section.blocks.size }},
+                timer: null,
+                touchX: 0,
+                go(index) { this.active = (index + this.total) % this.total },
+                start() {
+                    if (this.total > 1) this.timer = setInterval(() => this.go(this.active + 1), 5000);
+                },
+                stop() { clearInterval(this.timer) }
+            }"
+            x-init="start()"
+            x-on:mouseenter="stop()"
+            x-on:mouseleave="start()"
+            x-on:touchstart.passive="touchX = $event.touches[0].clientX; stop()"
+            x-on:touchend="
+                const delta = $event.changedTouches[0].clientX - touchX;
+                if (Math.abs(delta) > 40) go(active + (delta < 0 ? 1 : -1));
+                start();
+            "
+        >
+            {% for block in section.blocks %}
+                <div
+                    class="trade-slide trade-media{% if forloop.first %} is-active{% endif %}"
+                    x-bind:class="{ 'is-active': active === {{ forloop.index0 }} }"
+                    role="group"
+                    aria-roledescription="slide"
+                    aria-label="{{ forloop.index }} / {{ forloop.length }}"
+                    {{ block.shopify_attributes }}
+                >
+                    {% if block.settings.image != blank %}
+                        {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', sizes: '(min-width: 1132px) 1100px, 100vw', widths: '600,900,1200,1600,2000' }}
+                    {% else %}
+                        {% capture placeholder %}lifestyle-{{ forloop.index0 | modulo: 2 | plus: 1 }}{% endcapture %}
+                        {{ placeholder | placeholder_svg_tag: 'trade-placeholder' }}
+                    {% endif %}
+                    {% if block.settings.caption != blank %}
+                        <p class="trade-slide__caption">{{ block.settings.caption }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            {% if section.blocks.size > 1 %}
+                <div class="trade-slideshow__dots">
+                    {% for block in section.blocks %}
+                        <button
+                            type="button"
+                            class="trade-slideshow__dot{% if forloop.first %} is-active{% endif %}"
+                            x-bind:class="{ 'is-active': active === {{ forloop.index0 }} }"
+                            x-on:click="go({{ forloop.index0 }})"
+                            aria-label="Show slide {{ forloop.index }}"
+                        ></button>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Slideshow",
+    "settings": [
+        {
+            "type": "text",
+            "id": "label",
+            "default": "Project gallery",
+            "label": "Accessible label"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "slide",
+            "name": "Slide",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "caption",
+                    "label": "Caption"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Slideshow",
+            "blocks": [
+                { "type": "slide" },
+                { "type": "slide" },
+                { "type": "slide" }
+            ]
+        }
+    ]
+}
+{% endschema %}

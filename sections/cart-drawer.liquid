@@ -59,14 +59,16 @@
           <p>Your cart is empty.</p>
         {% endif %}
       </div>
-      <div class="cart-modal__footer">
-        <div class="clear-cart-btn-wrapper">
-          <button class="clear-cart-btn">
-            CLEAR CART
-          </button>
-        </div>
+      <div class="cart-modal__footer" data-item-count="{{ cart.item_count }}">
+        {% if cart.item_count > 0 %}
+          <div class="clear-cart-btn-wrapper">
+            <button type="button" class="clear-cart-btn">Clear cart</button>
+          </div>
+        {% endif %}
         <div class="subtotal-wrapper">
-          <p class="subtotal-txt">Subtotal: {{ cart.total_price | money }}</p>
+          <p class="subtotal-txt">
+            Subtotal: <span class="subtotal-price">{{ cart.total_price | money }}</span>
+          </p>
         </div>
         <a class="view-cart-btn" href="{{ routes.cart_url }}">View cart</a>
         <a class="checkout-btn" href="/checkout">Checkout</a>
@@ -256,22 +258,71 @@
     }
     .cart-modal__footer {
       border-top: 1px solid #ddd;
-      padding: 16px;
-      .clear-cart-btn-wrapper{
-        .clear-cart-btn{
-          
+      padding: 24px 16px 16px;
+      .clear-cart-btn-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 32px;
+        .clear-cart-btn {
+          background: none;
+          border: 0;
+          color: #000;
+          cursor: pointer;
+          font-size: 14px;
+          letter-spacing: 0.5px;
+          padding: 0;
+          text-decoration: underline;
+          text-transform: uppercase;
+
+          &:disabled {
+            cursor: wait;
+            opacity: 0.5;
+          }
         }
       }
-      .subtotal-wrapper{
-        .subtotal-txt{
-
+      .subtotal-wrapper {
+        margin-bottom: 16px;
+        text-align: right;
+        .subtotal-txt {
+          font-size: 14px;
+          margin: 0;
+        }
+        .subtotal-price {
+          font-size: 20px;
+          font-weight: 700;
         }
       }
-      .view-cart-btn{
+      .view-cart-btn,
+      .checkout-btn {
+        align-items: center;
+        border: 1px solid #000;
+        display: flex;
+        font-size: 14px;
+        font-weight: 700;
+        height: 50px;
+        justify-content: center;
+        letter-spacing: 1px;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: opacity 0.2s;
+        width: 100%;
 
+        &:hover {
+          opacity: 0.85;
+        }
       }
-      .checkout-btn{
-
+      .view-cart-btn {
+        background: #fff;
+        color: #000;
+        margin-bottom: 12px;
+        &:hover {
+          background: #000;
+        color: #fff;
+        }
+      }
+      .checkout-btn {
+        background: #000;
+        color: #fff;
       }
     }
   }
@@ -298,6 +349,16 @@
         const current = cartDrawer.querySelector(selector);
         if (fresh && current) current.innerHTML = fresh.innerHTML;
       });
+
+      // Keep the header cart bubble in sync with the freshly rendered cart
+      const freshFooter = doc.querySelector('.cart-modal__footer');
+      if (freshFooter) {
+        const count = Number(freshFooter.dataset.itemCount) || 0;
+        document.querySelectorAll('[data-cart-count]').forEach((bubble) => {
+          bubble.textContent = count;
+          bubble.hidden = count === 0;
+        });
+      }
       cartDrawer.querySelector('.cart-drawer-wrapper').classList.add('is-active');
     };
 
@@ -328,7 +389,26 @@
       .catch(() => item.classList.remove('is-loading'));
   };
 
+  const clearCart = (button) => {
+    button.disabled = true;
+
+    fetch(`${cartRoot}cart/clear.js`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        sections: 'cart-drawer',
+        sections_url: window.location.pathname
+      })
+    })
+      .then((res) => res.json())
+      .then((response) => cartDrawer.renderContents(response))
+      .catch(() => (button.disabled = false));
+  };
+
   cartDrawer.addEventListener('click', (event) => {
+    const clearButton = event.target.closest('.clear-cart-btn');
+    if (clearButton) return clearCart(clearButton);
+
     const item = event.target.closest('.cart-item');
     if (!item) return;
 
@@ -344,4 +424,5 @@
     if (!event.target.matches('[data-qty-input]')) return;
     updateLine(event.target.closest('.cart-item'), Number(event.target.value) || 0);
   });
+  
 </script>

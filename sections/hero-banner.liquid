@@ -1,0 +1,101 @@
+<div class="hero-banner" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{{ section.settings.image | image_url: width: 2000 }}');">
+  
+  <h1 class="hero-banner__title">{{ section.settings.custom_hero_title }}</h1>
+  <div class="hero-banner__links">
+    <a class="hero-banner__link" href="{{section.settings.button_link_1}}">{{ section.settings.button_1_text }}</a>
+    <a class="hero-banner__link" href="{{section.settings.button_link_2}}">{{ section.settings.button_2_text }}</a>
+  </div>
+</div>
+{% stylesheet %}
+  .hero-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url('https://cdn.shopify.com/s/files/1/0718/5285/1315/files/autumn-photographer-taking-picture_925x_06b0c11d-b08e-439a-bee5-234eff721022.jpg?v=1786441171');
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .hero-banner__title {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+  }
+  .hero-banner__links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .hero-banner__link {
+    background-color: #fff;
+    padding: 15px 30px;
+    border-radius: 60px;
+    font-weight: 600;
+  }
+  .hero-banner__link:hover {
+    color: #fff;
+    background-color: #111;
+    
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "hero banner",
+  "tag": "section",
+  "class": "hero-banner-wrapper",
+  "settings": [
+    { 
+      "type": "image_picker", 
+      "id": "image", 
+      "label": "Background image" 
+    },
+    {
+      "type": "text",
+      "id": "custom_hero_title",
+      "label": "Heading",
+      "default": "Title"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button link 1 Text",
+      "default": "button 1"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button link 2 Text",
+      "default": "button 2"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Button link 1"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button link 2"
+    }
+  ],
+
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+
+  "presets": [
+    {
+      "name": "new hero banner",
+      "category": "Custom Banners"
+    }
+  ]
+}
+{% endschema %}

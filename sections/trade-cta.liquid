@@ -1,0 +1,67 @@
+{{ 'trade.css' | asset_url | stylesheet_tag }}
+
+<section class="trade trade-cta">
+    <div class="trade-cta__media trade-media">
+        {% if section.settings.image != blank %}
+            {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '750,1100,1500,2000,2400' }}
+        {% else %}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'trade-placeholder' }}
+        {% endif %}
+    </div>
+    <div class="trade-cta__overlay" style="opacity: 0.35;"></div>
+
+    <div class="trade-container trade-cta__inner">
+        {% if section.settings.heading != blank %}
+            <h2 class="trade-h2">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+            <p class="trade-text">{{ section.settings.text }}</p>
+        {% endif %}
+        {% if section.settings.button_label != blank %}
+            <a href="{{ section.settings.button_link }}" class="trade-btn trade-btn--light">{{ section.settings.button_label }}</a>
+        {% endif %}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Trade: Call to action",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background image"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "default": "Ready to start?",
+            "label": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "text",
+            "default": "Apply for trade pricing today — no minimum order, no long forms.",
+            "label": "Text"
+        },
+        {
+            "type": "text",
+            "id": "button_label",
+            "default": "Apply for Trade Pricing",
+            "label": "Button label"
+        },
+        {
+            "type": "text",
+            "id": "button_link",
+            "default": "#apply",
+            "label": "Button link",
+            "info": "A URL or an anchor such as #apply"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Trade: Call to action"
+        }
+    ]
+}
+{% endschema %}
